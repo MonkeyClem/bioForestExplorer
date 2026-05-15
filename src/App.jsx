@@ -4,7 +4,7 @@ import Experience from "./game/Experience";
 
 export default function App() {
   return (
-    <Canvas camera={{ position: [0, 5.8, 5], fov: 50 }}>
+    <Canvas camera={{ position: [-13, 6.8, -8], fov: 50 }}>
       <Experience />
     </Canvas>
   );

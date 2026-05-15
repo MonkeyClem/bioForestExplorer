@@ -32,7 +32,9 @@ export default function Experience() {
 
 
       <Lighting stationPowered={stationPowered}/>
-      <Scene onActivateConsole={() => setStationPowered(true) }/>
+      <Scene  onActivateConsole={() => setStationPowered(true) }
+            stationPowered = {stationPowered}  
+      />
 
       <PlayerControls/>
       <PostProcessing />

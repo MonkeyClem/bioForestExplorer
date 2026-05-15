@@ -34,7 +34,7 @@ export function Console({ onActivate }: ConsoleProps) {
   }, [isNear, activated, onActivate]);
 
   return (
-    <group ref={consoleRef} position={[0, 3.1, -10]} scale={4} rotation={[0 , -3 , 0]}>
+    <group ref={consoleRef} position={[18, 3.1, 0]} scale={4} rotation={[0 , -5 , 0]}>
       <mesh position={[0, 0.45, 0]}>
         <boxGeometry args={[1.2, 0.9, 0.5]} />
         <meshStandardMaterial color="#121827" />
@@ -45,7 +45,7 @@ export function Console({ onActivate }: ConsoleProps) {
         <meshStandardMaterial
           color={activated ? "#66ffee" : "#223344"}
           emissive={activated ? "#66ffee" : "#0b1a22"}
-          emissiveIntensity={activated ? 3 : 0.5}
+          emissiveIntensity={activated ? 1 : 0.5}
         />
       </mesh>
 

@@ -5,7 +5,10 @@ interface LightingProps{
 export function Lighting({stationPowered} : LightingProps) {
   return (
     <>
-      <ambientLight intensity={0.18} color="#1b244d" />
+      <ambientLight intensity={stationPowered ? 3 : 0.18} color="#1b244d" />
+
+
+
 
       <directionalLight
         position={[8, 12, 6]}
@@ -19,6 +22,16 @@ export function Lighting({stationPowered} : LightingProps) {
         distance={1.2}
         color="#45e6ff"
       />
+
+
+         <pointLight
+        position={[0, 3, 4]}
+        intensity={2}
+        distance={30}
+        color="#45e6ff"
+        
+      />
+
 
       <pointLight
         position={[0, 3, -14]}
