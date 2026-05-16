@@ -1,6 +1,6 @@
 import { useGLTF, Sparkles } from "@react-three/drei";
 import { Console } from "../components/Console";
-import { Crystal, Plant, Station } from "../components/Station";
+import { AlienGrassField, Crystal,  Plant, Station } from "../components/Station";
 import { TransitionCorridor } from "../components/TransitionCorridor";
 import { AlienPlant } from "../components/AlienPlant";
 
@@ -10,11 +10,16 @@ import { useFrame } from "@react-three/fiber";
 import type { ThreeElements } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
+import { useSpring } from "@react-spring/three";
 
 type GiantAlienTreeProps = ThreeElements["group"];
 
 export function GiantAlienTree(props: GiantAlienTreeProps) {
   const ref = useRef<THREE.Group>(null);
+
+  const {} = useSpring({
+
+  })
 
   useFrame((state) => {
     if (!ref.current) return;
@@ -25,7 +30,7 @@ export function GiantAlienTree(props: GiantAlienTreeProps) {
   });
 
   return (
-    <group ref={ref} {...props}>
+    <group ref={ref} {...props} scale={6}>
       {/* Tronc immense */}
       <mesh position={[0, 8, 0]}>
         <cylinderGeometry args={[1.4, 2.4, 16, 7]} />
@@ -42,9 +47,10 @@ export function GiantAlienTree(props: GiantAlienTreeProps) {
         <icosahedronGeometry args={[5, 1]} />
         <meshStandardMaterial
           color="#24103a"
-          emissive="#18072a"
-          emissiveIntensity={0.6}
+          emissive="#0cd182"
+          emissiveIntensity={6}
           roughness={0.8}
+          fog={false}
         />
       </mesh>
 
@@ -70,12 +76,12 @@ export function GiantAlienTree(props: GiantAlienTreeProps) {
       {/* Lumière douce locale */}
 
       
-      <pointLight
+      {/* <pointLight
         position={[0, 9, 25]}
         color="#df07be"
         intensity={2000}
-        distance={20}
-      />
+        distance={200}
+      /> */}
     </group>
   );
 }
@@ -94,38 +100,60 @@ export function Scene({ onActivateConsole, stationPowered}: SceneProps) {
 
       <mesh rotation-x={-Math.PI / 2}>
         <planeGeometry args={[300, 300]} />
-        <meshStandardMaterial color="#355ad7" />
+        <meshStandardMaterial color="#030303" />
       </mesh>
 
-{/* 
-{stationPowered &&      <mesh position={[1, 7, 1]}>
-        <Sparkles
-          count={800}
-          scale={[60, 10, 30]}
-          size={2.5}
-          speed={0.2}
-          color="#88ccff"
-          
-        />
-      </mesh> } */}
+      <mesh
+            rotation-x={-Math.PI / 2}
+            position={[0, 0.15, -30]}
+>
+  <planeGeometry args={[300, 300]} />
+  <meshStandardMaterial
+    color="#0969c9"
+    emissive={"#0969c9"}
+    emissiveIntensity={2}
+    transparent
+    opacity={0.4}
+    depthWrite={false}
+  />
+</mesh>
 
 
-
-
+      <mesh
+            rotation-x={-Math.PI / 2}
+            position={[0, 0.15, -30]}
+>
+  <planeGeometry args={[300, 300]} />
+  <meshStandardMaterial
+    color="#0969c9"
+    emissive={"#0897ea"}
+    emissiveIntensity={0.1}
+    transparent
+    opacity={0.8}
+    depthWrite={false}
+  />
+</mesh>
 
 
 
       <Station />
-      {/* <Crystal/> */}
       <TransitionCorridor position={[35, 3.5 , 2.5]} rotation={[0, -1.8, 0]} stationPowered={stationPowered}/>
+      <Crystal/>
       <Console onActivate={onActivateConsole} />
       <AlienPlant
       stationPowered={stationPowered}
   position={[45, 0, -9]}
   scale={3}
 />
-<GiantAlienTree   position={[60, 0, -15]}
+<GiantAlienTree  position={[65, 0, -25]}
  />
+
+ <AlienGrassField/>
+
+ <pointLight position={[35, 3.5 , 2.5]} 
+    intensity={400}
+    distance={5}
+    color={"#c60ec9"}/>
 
 <Plant/>
     </>

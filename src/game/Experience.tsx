@@ -4,6 +4,7 @@ import { PlayerControls } from "./Camera";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useState } from "react";
 import { Scene } from "./Scene";
+import { SkyDome } from "../components/SkyDome";
 
 export function PostProcessing() {
   return (
@@ -25,10 +26,11 @@ export default function Experience() {
 
   return (
     <>
-      <color attach="background" args={["#02040d"]} />
-      <fog attach="fog" args={["#05081a", 8, 45]} />
+      <color attach="background" args={["#1d0d1f"]} />
+      <fog attach="fog" args={["#280127", 10, 40]} />
 
 
+<SkyDome/>
 
 
       <Lighting stationPowered={stationPowered}/>

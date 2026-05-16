@@ -43,7 +43,7 @@ export function TransitionCorridor({
 
 
   <pointLight
-    color="#7fffee"
+    color="#b30f97"
     position={[0, 10 ,0]}
     intensity={stationPowered ? 200 : 0}
     distance={stationPowered ? 200 : 0}
@@ -57,7 +57,7 @@ export function TransitionCorridor({
     size={2.5}
     opacity={0.7}
     speed={2}
-    color="#9fffee"
+    color="#3dc2fb"
   />)}
     </group>
   );
