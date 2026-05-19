@@ -17,10 +17,10 @@ export function AlienPlant(props: AlienPlantProps) {
     const t = state.clock.elapsedTime;
 
     ref.current.rotation.z =
-      Math.sin(t * 0.35) * 0.04;
+      Math.sin(t * 0.35) * 0.09;
 
     ref.current.rotation.x =
-      Math.cos(t * 0.2) * 0.015;
+      Math.cos(t * 0.2) * 0.035;
   });
 
 

@@ -27,7 +27,7 @@ export default function Experience() {
   return (
     <>
       <color attach="background" args={["#1d0d1f"]} />
-      <fog attach="fog" args={["#280127", 10, 40]} />
+      <fog attach="fog" args={["#1f021e", 10, 40]} />
 
 
 <SkyDome/>

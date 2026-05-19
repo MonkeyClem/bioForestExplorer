@@ -1,7 +1,7 @@
 import { animated, useSpring } from "@react-spring/three";
 import { useGLTF } from "@react-three/drei";
-import { ThreeElements } from "@react-three/fiber";
-import { useEffect } from "react";
+import { ThreeElements, useFrame, Vector3 } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
 import * as THREE from 'three'
 
 export function Station() {
@@ -26,23 +26,31 @@ type GrassFieldProps = {
   count?: number;
   width?: number;
   depth?: number;
-};
+  position : Vector3
+  color: string
+}&ThreeElements["group"];
+
+
 
 export function AlienGrassField({
-  count = 100,
-  width = 50,
+  count = 150,
+  width = 40,
   depth = 40,
+  position,
+  color 
 }: GrassFieldProps) {
   const { scene } = useGLTF("/models/grassPatch.glb");
 
+  const ref = useRef<THREE.Group>(null)
+  
   useEffect(() => {
     scene.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         const material = child.material;
 
         if (material instanceof THREE.MeshStandardMaterial) {
-          material.color = new THREE.Color("#19dff1");
-          material.emissive = new THREE.Color("#19dff1");
+          material.color = new THREE.Color(color);
+          material.emissive = new THREE.Color(color);
           material.emissiveIntensity = 1.5;
           material.roughness = 0.9;
           material.metalness = 0;
@@ -51,30 +59,72 @@ export function AlienGrassField({
     });
   }, [scene]);
 
+  useFrame((state) => {
+    if (!ref.current) return;
+
+    const t = state.clock.elapsedTime;
+
+    ref.current.rotation.x =
+      Math.sin(t * 3.5) * 9;
+
+    ref.current.rotation.y =
+      Math.cos(t * 3.6) * 4;
+  });
+
   const instances = useMemo(() => {
+
     return Array.from({ length: count }, (_, index) => ({
       id: index,
       position: [
-        (Math.random() - 0.5) * width,
+        (Math.random() ) * width,
         0,
-        (Math.random() - 0.5) * depth,
+        (Math.random() ) * depth,
       ] as [number, number, number],
       rotation: [0, Math.random() * Math.PI * 2, 0] as [number, number, number],
-      scale: 1.2 + Math.random() * 1.4,
+      scale: 0.5 + Math.random() * 1.4,
     }));
   }, [count, width, depth]);
 
+ return (
+  <group position={position}>
+    {instances.map((grass) => (
+      <AnimatedGrass
+        key={grass.id}
+        object={scene}
+        position={grass.position}
+        rotation={grass.rotation}
+        scale={grass.scale}
+      />
+    ))}
+  </group>
+  );
+}
+
+
+
+type AnimatedGrassProps = {
+  object: THREE.Object3D;
+  position: [number, number, number];
+  rotation: [number, number, number];
+  scale: number;
+};
+
+function AnimatedGrass({ object, position, rotation, scale }: AnimatedGrassProps) {
+  const ref = useRef<THREE.Group>(null);
+  const phase = useMemo(() => Math.random() * Math.PI * 2, []);
+
+  useFrame((state) => {
+    if (!ref.current) return;
+
+    const t = state.clock.elapsedTime;
+
+    ref.current.rotation.z = rotation[2] + Math.sin(t * 1.5 + phase) * 0.04;
+    ref.current.rotation.x = rotation[0] + Math.cos(t * 2.8 + phase) * 0.015;
+  });
+
   return (
-    <group>
-      {instances.map((grass) => (
-        <Clone
-          key={grass.id}
-          object={scene}
-          position={grass.position}
-          rotation={grass.rotation}
-          scale={grass.scale}
-        />
-      ))}
+    <group ref={ref} position={position} rotation={rotation} scale={scale}>
+      <Clone object={object} />
     </group>
   );
 }

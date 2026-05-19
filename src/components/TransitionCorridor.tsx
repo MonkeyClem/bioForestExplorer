@@ -36,9 +36,10 @@ export function TransitionCorridor({
       </mesh>
 
       {/* Plafond */}
+      
       <mesh position={[0, height, -length / 2]}>
         <boxGeometry args={[width, 0.15, length]} />
-        <meshStandardMaterial color="#060914" />
+        <meshStandardMaterial color="#fff" emissive={""} emissiveIntensity={0.1} metalness={1} roughness={1}/>
       </mesh>
 
 

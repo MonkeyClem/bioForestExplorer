@@ -1,8 +1,3 @@
-// import { OrbitControls } from "@react-three/drei";
-
-// export function Camera() {
-//   return <OrbitControls />;
-// }
 import { PointerLockControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
@@ -22,17 +17,9 @@ export function PlayerControls() {
   const velocity = useRef(new THREE.Vector3());
   const direction = useRef(new THREE.Vector3());
 
-//   const hasInitialized = useRef(false);
 
-// useEffect(() => {
-//   if (hasInitialized.current) return;
-
-//   camera.position.set(0, 5.8, 5);
-//   hasInitialized.current = true;
-// }, [camera]);
 
   useEffect(() => {
-    // camera.position.set(0, 5.8, 5);
 
     function onKeyDown(event) {
       switch (event.code) {
